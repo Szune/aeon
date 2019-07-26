@@ -11,9 +11,9 @@ part 'macro.dart';
 class Aeon {
   const Aeon.constant({this.variables, this.macros});
   Aeon({
-    this.variables,
-    this.macros,
-  });
+    this.variables = const {},
+    this.macros = const {},
+  }) : assert(variables != null, macros != null);
   final Map<String, dynamic> variables;
   final Map<String, Macro> macros;
 
@@ -31,15 +31,15 @@ class Aeon {
 
   String toText() {
     var buf = StringBuffer();
-    macros?.forEach((macroName, macro) {
-      writeMacro(buf, macroName, macro);
-    });
-    variables?.forEach((key, value) {
-      buf.write(key);
+    for (var macro in macros.entries) {
+      writeMacro(buf, macro.key, macro.value);
+    }
+    for (var kvp in variables.entries) {
+      buf.write(kvp.key);
       buf.write(': ');
-      _writeLongValue(buf, value);
+      _writeLongValue(buf, kvp.value);
       buf.writeln();
-    });
+    }
     return buf.toString();
   }
 
@@ -101,15 +101,15 @@ class Aeon {
     if (macro == null) {
       // no macro for this set of keys
       buf.write('{');
-      value.forEach((k, v) {
+      for (var kvp in value.entries) {
         if (first)
           first = false;
         else
           buf.write(', ');
-        _writeValue(buf, k);
+        _writeValue(buf, kvp.key);
         buf.write(': ');
-        _writeLongValue(buf, v);
-      });
+        _writeLongValue(buf, kvp.value);
+      }
       buf.write('}');
     } else {
       // write out macro instead of keys
@@ -129,13 +129,13 @@ class Aeon {
   void _writeList(StringBuffer buf, Iterable value) {
     buf.write('[');
     bool first = true;
-    value.forEach((e) {
+    for (var val in value) {
       if (first)
         first = false;
       else
         buf.write(', ');
-      _writeLongValue(buf, e);
-    });
+      _writeLongValue(buf, val);
+    }
     buf.write(']');
   }
 
