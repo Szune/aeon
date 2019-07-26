@@ -2,6 +2,15 @@
 
 Awfully exciting object notation
 
+Example file:
+```
+'0.0.1 people_file (-1)
+@name("first", "last") # macro
+people: [name("Erik", "Person"), name("Karl", "Patrik")]
+# after parsing, the above becomes:
+people_expanded: [{"first": "Erik", "last": "Person"}, {"first": "Karl", "last": "Patrik"}]
+```
+
 ## Getting Started
 
 This project is a starting point for a Dart
