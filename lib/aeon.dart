@@ -60,7 +60,9 @@ class Aeon {
 
   static void _writeValue(StringBuffer buf, Object value) {
     if (value is String) {
+      buf.write('"');
       buf.write(_escapeString(value));
+      buf.write('"');
     } else {
       buf.write(value);
     }
@@ -138,7 +140,7 @@ class Aeon {
   }
 
   static String _escapeString(String value) {
-    return '"${value.replaceAll('"', '\\"')}"';
+    return value.replaceAll('"', '\\"');
   }
 
   static const Aeon empty = Aeon.constant(
