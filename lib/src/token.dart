@@ -1,4 +1,4 @@
-import 'package:aeon/src/tokens.dart';
+import 'tokens.dart';
 
 class Token {
   Token(

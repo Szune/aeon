@@ -1,5 +1,4 @@
 import 'package:aeon/aeon.dart';
-import 'package:aeon/macro.dart';
 import 'package:benchmark_harness/benchmark_harness.dart';
 
 class AeonToTextBenchmark extends BenchmarkBase {
@@ -33,6 +32,7 @@ class AeonToTextBenchmark extends BenchmarkBase {
     }, macros: {
       'name': Macro(name: 'name', args: ['first', 'last'])
     });
+    print('starting benchmark');
   }
 
   void teardown() {

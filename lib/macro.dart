@@ -1,4 +1,4 @@
-import 'package:aeon/src/key_value_pair.dart';
+part of 'aeon.dart';
 
 class Macro {
   Macro({this.name, List<String> args}) {

@@ -1,8 +1,11 @@
 library aeon;
 
-import 'package:aeon/src/aeon_parser.dart';
-import 'package:aeon/src/lexer.dart';
-import 'package:aeon/macro.dart';
+import 'src/aeon_parser.dart';
+import 'src/key_value_pair.dart';
+import 'src/lexer.dart';
+
+part 'aeon_model.dart';
+part 'macro.dart';
 
 /// Awfully exciting object notation
 class Aeon {

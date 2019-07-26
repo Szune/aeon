@@ -1,5 +1,5 @@
-import 'package:aeon/src/token.dart';
-import 'package:aeon/src/tokens.dart';
+import 'token.dart';
+import 'tokens.dart';
 
 class Lexer {
   Lexer({String text}) : assert(text != null) {

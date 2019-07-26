@@ -1,4 +1,4 @@
-import 'package:aeon/aeon.dart';
+part of 'aeon.dart';
 
 /// Classes including this mixin should provide a named constructor as such: ClassName.fromAeon([Aeon] aeon)
 ///

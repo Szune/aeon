@@ -1,9 +1,8 @@
-import 'package:aeon/aeon.dart';
-import 'package:aeon/src/key_value_pair.dart';
-import 'package:aeon/src/lexer.dart';
-import 'package:aeon/macro.dart';
-import 'package:aeon/src/token.dart';
-import 'package:aeon/src/tokens.dart';
+import '../aeon.dart';
+import 'key_value_pair.dart';
+import 'lexer.dart';
+import 'token.dart';
+import 'tokens.dart';
 
 class AeonParser {
   AeonParser({this.lexer});
