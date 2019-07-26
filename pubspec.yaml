@@ -8,13 +8,8 @@ environment:
   sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
   test: ^1.6.2
   benchmark_harness: ^1.0.5
 

@@ -38,7 +38,6 @@ void main() {
     final aeon = Aeon.fromText(text: '''@user("name", "password")
     users: [user("test", "test"), user("testUser", "testPassword2")]
     ''');
-    print(aeon['users'][0]);
-    print(aeon.toText());
+    expect(aeon['users'][0], equals({'name': 'test', 'password': 'test'}));
   });
 }
