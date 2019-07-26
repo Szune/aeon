@@ -227,7 +227,7 @@ class Lexer {
       read = getCurrent();
       if (read == minus) {
         // negative number
-        if (string.length == 0) {
+        if (string.isEmpty) {
           string.add(read);
         } else {
           throw Exception('Negative number char inside number.');
@@ -237,7 +237,7 @@ class Lexer {
       } else {
         if (read == dot) {
           // decimal separator
-          if (string.length == 0) {
+          if (string.isEmpty) {
             throw Exception('Decimal separator at the start of number.');
           }
           if (!hasDecimal) {

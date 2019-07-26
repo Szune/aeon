@@ -31,7 +31,7 @@ void main() {
   test('benchmark parser expanded w/ macro', () {
     ParserBenchmark.main();
   });
-  test('benchmark parser expanded', () {
+  test('benchmark parser expanded w/o macro', () {
     ParserExpandedBenchmark.main();
   });
   test('kvp', () {

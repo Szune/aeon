@@ -15,7 +15,23 @@ class JsonDecodeBenchmark extends BenchmarkBase {
     jsonDecode(_text);
   }
 
+  String generateATonOfStuff() {
+    StringBuffer stuff = StringBuffer();
+    for (int i = 0; i < 1000000; i++) {
+      stuff.write(''', {"fname": "fperson",  "lname": "lperson"}''');
+    }
+    return stuff.toString();
+  }
+
   String generateStuff() {
+    StringBuffer stuff = StringBuffer();
+    for (int i = 0; i < 100000; i++) {
+      stuff.write(''', {"fname": "fperson",  "lname": "lperson"}''');
+    }
+    return stuff.toString();
+  }
+
+  String generateLessStuff() {
     StringBuffer stuff = StringBuffer();
     for (int i = 0; i < 10000; i++) {
       stuff.write(''', {"fname": "fperson",  "lname": "lperson"}''');
@@ -28,7 +44,7 @@ class JsonDecodeBenchmark extends BenchmarkBase {
     _text = '''
     {
     "names": [{"fname": "fperson",  "lname": "lperson"}''' +
-        generateStuff() +
+        generateLessStuff() +
         ''']
         }
     ''';
