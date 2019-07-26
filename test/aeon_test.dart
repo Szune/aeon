@@ -1,3 +1,4 @@
+import 'package:aeon/aeon.dart';
 import 'package:test/test.dart';
 import 'benchmarks/aeon_from_text.dart';
 import 'benchmarks/aeon_from_text_expanded.dart';
@@ -32,5 +33,12 @@ void main() {
   });
   test('benchmark parser expanded', () {
     ParserExpandedBenchmark.main();
+  });
+  test('kvp', () {
+    final aeon = Aeon.fromText(text: '''@user("name", "password")
+    users: [user("test", "test"), user("testUser", "testPassword2")]
+    ''');
+    print(aeon['users'][0]);
+    print(aeon.toText());
   });
 }

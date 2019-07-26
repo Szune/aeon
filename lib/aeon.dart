@@ -3,56 +3,31 @@ library aeon;
 import 'package:aeon/src/aeon_parser.dart';
 import 'package:aeon/src/lexer.dart';
 import 'package:aeon/macro.dart';
-import 'package:aeon/tag.dart';
-import 'package:aeon/version.dart';
 
 /// Awfully exciting object notation
 class Aeon {
+  const Aeon.constant({this.variables, this.macros});
   Aeon({
-    this.tag,
     this.variables,
     this.macros,
   });
-  final Tag tag;
-  final Map<String, Object> variables;
+  final Map<String, dynamic> variables;
   final Map<String, Macro> macros;
 
-  Object get(String variable) {
+  dynamic get(String variable) {
     return variables[variable];
   }
 
-  Object operator [](String key) => variables != null ? variables[key] : null;
-
-  List<T> list<T>(String varName) {
-    return List<T>.from(variables[varName] ?? []);
-  }
-
-  Set<T> set<T>(String varName) {
-    return Set<T>.from(variables[varName] ?? {});
-  }
-
-  Map<K, V> map<K, V>(String varName) {
-    return Map<K, V>.from(variables[varName] ?? {});
-  }
+  dynamic operator [](String key) => variables != null ? variables[key] : null;
 
   static Aeon fromText({String text}) {
     var lexer = Lexer(text: text);
     var parser = AeonParser(lexer: lexer);
-    // update to check integrity through checksum
     return parser.parse();
   }
 
   String toText() {
     var buf = StringBuffer();
-    if (tag != null) {
-      buf.write("'");
-      buf.write(tag.version);
-      buf.write(' ');
-      buf.write(tag.name);
-      buf.write(' (');
-      buf.write(tag.checksum); // update to calculate checksum
-      buf.writeln(')');
-    }
     macros?.forEach((macroName, macro) {
       writeMacro(buf, macroName, macro);
     });
@@ -163,9 +138,8 @@ class Aeon {
     return '"${value.replaceAll('"', '\\"')}"';
   }
 
-  static final Aeon _empty = Aeon(
-    tag: Tag(version: Version(-1, -1, -1), checksum: -1, name: 'empty'),
+  static const Aeon empty = Aeon.constant(
     variables: {},
+    macros: {},
   );
-  static Aeon get empty => _empty;
 }

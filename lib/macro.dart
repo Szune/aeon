@@ -10,7 +10,7 @@ class Macro {
   int get length => _args.length;
   String operator [](int index) => _args[index];
 
-  KeyValuePair<String, Object> transform(int index, Object value) {
-    return KeyValuePair<String, Object>(key: _args[index], value: value);
+  KeyValuePair<String, dynamic> transform(int index, Object value) {
+    return KeyValuePair<String, dynamic>(key: _args[index], value: value);
   }
 }

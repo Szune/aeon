@@ -42,8 +42,7 @@ class AeonFromTextExpandedBenchmark extends BenchmarkBase {
 
   void setup() {
     // not measured
-    _text = '''\'0.0.1 profile (-1)
-    name: "test"
+    _text = '''name: "test"
     names: [{"fname": "fperson", "lname": "lperson"}''' +
         generateLessStuff() +
         ''']

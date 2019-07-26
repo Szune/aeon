@@ -43,8 +43,7 @@ class ParserBenchmark extends BenchmarkBase {
 
   void setup() {
     // not measured
-    _text = '''\'0.0.1 profile (-1)
-    @name("first", "last")
+    _text = '''@name("first", "last")
     name: "test"
     names: [name("fperson", "lperson")''' +
         generateLessStuff() +

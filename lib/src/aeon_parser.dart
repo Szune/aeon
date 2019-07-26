@@ -2,10 +2,8 @@ import 'package:aeon/aeon.dart';
 import 'package:aeon/src/key_value_pair.dart';
 import 'package:aeon/src/lexer.dart';
 import 'package:aeon/macro.dart';
-import 'package:aeon/tag.dart';
 import 'package:aeon/src/token.dart';
 import 'package:aeon/src/tokens.dart';
-import 'package:aeon/version.dart';
 
 class AeonParser {
   AeonParser({this.lexer});
@@ -45,15 +43,6 @@ class AeonParser {
     }
     require(Tokens.rightParenthesis);
     return map;
-  }
-
-  Tag _parseTag() {
-    var version = require(Tokens.version).version;
-    var name = require(Tokens.identifier).text;
-    require(Tokens.leftParenthesis);
-    var checksum = require(Tokens.intNum).intNum;
-    require(Tokens.rightParenthesis);
-    return Tag(version: version, name: name, checksum: checksum);
   }
 
   KeyValuePair<Object, Object> _parseKvp() {
@@ -138,11 +127,8 @@ class AeonParser {
     consume(); // fill up currentToken and nextToken
     consume();
     Map<String, Object> variables = {};
-    Tag tag = Tag(version: Version(0, 0, 1), checksum: -1);
     do {
-      if (match(Tokens.version)) {
-        tag = _parseTag();
-      } else if (match(Tokens.atSymbol)) {
+      if (match(Tokens.atSymbol)) {
         _parseMacroDefinition();
       } else if (match(Tokens.identifier)) {
         var variable = _parseVariable();
@@ -152,7 +138,7 @@ class AeonParser {
       }
     } while (_currentToken.type != Tokens.EOF);
 
-    return Aeon(tag: tag, variables: variables, macros: macros);
+    return Aeon(variables: variables, macros: macros);
   }
 
   Token require(Tokens expected) {

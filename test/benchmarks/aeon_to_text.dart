@@ -1,7 +1,5 @@
 import 'package:aeon/aeon.dart';
 import 'package:aeon/macro.dart';
-import 'package:aeon/tag.dart';
-import 'package:aeon/version.dart';
 import 'package:benchmark_harness/benchmark_harness.dart';
 
 class AeonToTextBenchmark extends BenchmarkBase {
@@ -28,16 +26,13 @@ class AeonToTextBenchmark extends BenchmarkBase {
 
   void setup() {
     // not measured
-    _aeon = Aeon(
-        tag: Tag(name: 'profile', version: Version(0, 0, 1), checksum: -1),
-        variables: {
-          'name': 'test',
-          'names': generateStuff(),
-          'person': {'first': 'person first', 'last': 'person last'},
-        },
-        macros: {
-          'name': Macro(name: 'name', args: ['first', 'last'])
-        });
+    _aeon = Aeon(variables: {
+      'name': 'test',
+      'names': generateStuff(),
+      'person': {'first': 'person first', 'last': 'person last'},
+    }, macros: {
+      'name': Macro(name: 'name', args: ['first', 'last'])
+    });
   }
 
   void teardown() {

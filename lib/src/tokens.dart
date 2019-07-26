@@ -6,8 +6,6 @@ enum Tokens {
   rightBrace,
   leftParenthesis,
   rightParenthesis,
-  leftAngleBracket,
-  rightAngleBracket,
   colon,
   comma,
   identifier,
@@ -15,7 +13,6 @@ enum Tokens {
   intNum,
   doubleNum,
   exclamation,
-  version,
   atSymbol,
   EOF
 }

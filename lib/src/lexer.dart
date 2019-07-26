@@ -1,6 +1,5 @@
 import 'package:aeon/src/token.dart';
 import 'package:aeon/src/tokens.dart';
-import 'package:aeon/version.dart';
 
 class Lexer {
   Lexer({String text}) : assert(text != null) {
@@ -38,7 +37,7 @@ class Lexer {
   static const int carriageReturn = 13;
   static const int space = 32;
   static const int quote = 34;
-  static const int apostrophe = 39;
+  //static const int apostrophe = 39;
   static const int backslash = 92;
   static const int colon = 58;
   static const int atSymbol = 64;
@@ -66,9 +65,7 @@ class Lexer {
   static const int n8 = 56; // 8
   static const int n9 = 57; // 9
 
-  int getCurrent() {
-    return _runes.current;
-  }
+  int getCurrent() => _runes.current;
 
   bool isEmpty() => _isEmpty;
 
@@ -89,10 +86,10 @@ class Lexer {
   }
 
   void moveToNextLine() {
-    int read = 0;
+    int read;
     do {
       read = getCurrent();
-      if (read == Lexer.newline) {
+      if (read == newline) {
         _line++;
         _col = 1;
         return;
@@ -135,26 +132,19 @@ class Lexer {
     }
   }
 
-  bool isEOF() {
-    if (_runes.current == null) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  bool isEOF() => _runes.current == null;
 
   Token nextToken() {
     skipWhitespaceAndComments();
-    if (isEOF()) return Token(type: Tokens.EOF, line: _line, col: _col);
-    if (getCurrent() == apostrophe) // version number start
-      return getVersionToken();
-    if (getCurrent() == quote) // string start
+    int read = getCurrent();
+    if (read == null) return Token(type: Tokens.EOF, line: _line, col: _col);
+    if (read == quote) // string start
       return Token(
           type: Tokens.string, text: getString(), line: _line, col: _col);
-    if (isNumberStart(getCurrent())) return getNumberToken();
-    if (identifierCharacters.contains(getCurrent())) return getIdentifier();
+    if (isNumberStart(read)) return getNumberToken();
+    if (identifierCharacters.contains(read)) return getIdentifier();
     Token token;
-    switch (getCurrent()) {
+    switch (read) {
       case leftBracket:
         token = Token(type: Tokens.leftBracket, line: _line, col: _col);
         break;
@@ -172,12 +162,6 @@ class Lexer {
         break;
       case rightParenthesis:
         token = Token(type: Tokens.rightParenthesis, line: _line, col: _col);
-        break;
-      case leftAngleBracket:
-        token = Token(type: Tokens.leftAngleBracket, line: _line, col: _col);
-        break;
-      case rightAngleBracket:
-        token = Token(type: Tokens.rightAngleBracket, line: _line, col: _col);
         break;
       case colon:
         token = Token(type: Tokens.colon, line: _line, col: _col);
@@ -199,7 +183,7 @@ class Lexer {
   String getString() {
     moveNext(); // skip first quote
     bool previousWasEscape = false;
-    int read = 0;
+    int read;
     List<int> string = [];
     bool wasTerminated = false;
 
@@ -232,11 +216,11 @@ class Lexer {
   }
 
   static bool isNumberStart(int char) {
-    return Lexer.isNumber(char) || char == minus;
+    return isNumber(char) || char == minus;
   }
 
   Token getNumberToken() {
-    int read = 0;
+    int read;
     List<int> string = [];
     bool hasDecimal = false;
     do {
@@ -248,7 +232,7 @@ class Lexer {
         } else {
           throw Exception('Negative number char inside number.');
         }
-      } else if (Lexer.isNumber(read)) {
+      } else if (isNumber(read)) {
         string.add(read);
       } else {
         if (read == dot) {
@@ -303,57 +287,5 @@ class Lexer {
         text: identifierString,
         line: _line,
         col: _col);
-  }
-
-  Token getVersionToken() {
-    moveNext(); // skip apostrophe
-    skipWhitespaceAndComments();
-    int read = 0;
-    int major, minor, build;
-    List<int> string = [];
-    do {
-      read = getCurrent();
-      if (isNumber(read)) {
-        string.add(read);
-      } else if (read == dot) {
-        if (major == null) {
-          major = _getNumber(string);
-          string.clear();
-        } else if (minor == null) {
-          minor = _getNumber(string);
-          string.clear();
-        }
-      } else if (whitespaceCharacters.contains(read)) {
-        continue;
-      } else {
-        if (major != null &&
-            minor != null &&
-            build == null &&
-            string.length > 0) {
-          build = _getNumber(string);
-        } else {
-          throw Exception(
-              'Unexpected character in version number: "${String.fromCharCode(read)}" ($read)');
-        }
-        break;
-      }
-    } while (moveNext() && !isEOF());
-    if (build == null) {
-      if (string.length > 0) {
-        build = _getNumber(string);
-      } else {
-        build = 0;
-      }
-    }
-    return Token(
-        type: Tokens.version,
-        version: Version(major, minor, build),
-        line: _line,
-        col: _col);
-  }
-
-  int _getNumber(List<int> string) {
-    String returnString = String.fromCharCodes(string);
-    return int.parse(returnString);
   }
 }
