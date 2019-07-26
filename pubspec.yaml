@@ -1,0 +1,16 @@
+name: aeon
+description: Awfully exciting object notation
+version: 0.0.1
+author: Erik Iwarson
+homepage:
+
+environment:
+  sdk: ">=2.2.0 <3.0.0"
+
+dependencies:
+
+dev_dependencies:
+  test: ^1.6.5
+  benchmark_harness: ^1.0.5
+
+

@@ -1,0 +1,21 @@
+enum Tokens {
+  none,
+  leftBracket,
+  rightBracket,
+  leftBrace,
+  rightBrace,
+  leftParenthesis,
+  rightParenthesis,
+  leftAngleBracket,
+  rightAngleBracket,
+  colon,
+  comma,
+  identifier,
+  string,
+  intNum,
+  doubleNum,
+  exclamation,
+  version,
+  atSymbol,
+  EOF
+}
